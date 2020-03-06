@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,10 +57,11 @@ public class SkadeRegister {
 	public ArrayList<String> showIncoming() {
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Inkommande")) {
-				incoming.add(skada.getKey() + skada.getValue().getTitle());
+				incoming.add(skada.getKey() + " " + skada.getValue().getTitle());
 			}
 			
 		}
+		Collections.sort(incoming);
 		
 		return incoming;
 	}
@@ -85,6 +87,7 @@ public class SkadeRegister {
 		
 		return finished;
 	}
+	//lista för vidarebefodrade ärenden
 	public ArrayList<String> showForwarded() {
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Pågående")) {
