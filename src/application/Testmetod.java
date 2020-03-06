@@ -13,6 +13,9 @@ public class Testmetod {
 		test2.setDamageId(8);
 		test3.setDamageId(20);
 		test.setTitle("Skada på fönster");
+		test1.setTitle("Skada på stol");
+		test2.setTitle("krossat fönster");
+		test3.setTitle("jag vet inte!!");
 		reg.addDamage(test);
 		reg.addDamage(test2);
 		reg.addDamage(test3);

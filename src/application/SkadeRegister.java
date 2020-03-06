@@ -7,10 +7,7 @@ import java.util.Map;
 
 public class SkadeRegister {
 	private HashMap <Integer, Skadeanmälan> damageList = new HashMap <Integer, Skadeanmälan>();
-	private ArrayList<String> incoming = new ArrayList<String>();
-	private ArrayList<String> ongoing = new ArrayList<String>();
-	private ArrayList<String> finished = new ArrayList<String>();
-	private ArrayList<String> forwarded = new ArrayList<String>();
+	
 
 
 	public HashMap <Integer, Skadeanmälan> getSkadeLista() {
@@ -20,34 +17,6 @@ public class SkadeRegister {
 	public void setSkadeLista(HashMap <Integer, Skadeanmälan> damageList) {
 		damageList = this.damageList;
 	} 
-
-	public ArrayList<String> getIncoming() {
-		return incoming;
-	}
-	public void setInkommande(ArrayList<String> incoming) {
-		this.incoming = incoming;
-	}
-
-	public ArrayList<String> getOngoing() {
-		return ongoing;
-	}
-	public void setOngoing(ArrayList<String> ongoing) {
-		this.ongoing = ongoing;
-	}
-	
-	public ArrayList<String> getFinished() {
-		return finished;
-	}
-	public void setFinished(ArrayList<String> finished) {
-		this.finished = finished;
-	}
-	
-	public ArrayList<String> getForwarded() {
-		return forwarded;
-	}
-	public void setForwarded(ArrayList<String> forwarded) {
-		this.forwarded = forwarded;
-	}
 	
 	public void addDamage(Skadeanmälan skada) {
 		damageList.put(skada.getDamageId(), skada);
@@ -55,47 +24,85 @@ public class SkadeRegister {
 	
 	// inkommande ärenden
 	public ArrayList<String> showIncoming() {
+		ArrayList<Integer> incoming = new ArrayList<Integer>();
+		ArrayList<String> sortIncoming = new ArrayList<String>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Inkommande")) {
-				incoming.add(skada.getKey() + " " + skada.getValue().getTitle());
+				incoming.add(skada.getKey());
 			}
 			
 		}
 		Collections.sort(incoming);
-		
-		return incoming;
+		for(Integer id : incoming) {
+			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
+				if(id.equals(skada.getKey())) {
+					sortIncoming.add(skada.getKey() + " " + skada.getValue().getTitle());
+				}
+			}
+		}
+		return sortIncoming;
 	}
+	
 	//pågående ärenden
 	public ArrayList<String> showOngoing() {
+		ArrayList<Integer> ongoing = new ArrayList<Integer>();
+		ArrayList<String> sortOngoing = new ArrayList<String>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Pågående")) {
-				ongoing.add(skada.getKey() + skada.getValue().getTitle());
+				ongoing.add(skada.getKey());
 			}
 			
 		}
-		
-		return ongoing;
+		Collections.sort(ongoing);
+		for(Integer id : ongoing) {
+			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
+				if(id.equals(skada.getKey())) {
+					sortOngoing.add(skada.getKey() + " " + skada.getValue().getTitle());
+				}
+			}
+		}
+		return sortOngoing;
 	}
+	
 	//avslutade ärenden
 	public ArrayList<String> showFinished() {
+		ArrayList<Integer> finished = new ArrayList<Integer>();
+		ArrayList<String> sortFinished = new ArrayList<String>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Avslutad")) {
-				finished.add(skada.getKey() + skada.getValue().getTitle());
+				finished.add(skada.getKey());
 			}
 			
 		}
-		
-		return finished;
+		Collections.sort(finished, Collections.reverseOrder());
+		for(Integer id : finished) {
+			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
+				if(id.equals(skada.getKey())) {
+					sortFinished.add(skada.getKey() + " " + skada.getValue().getTitle());
+				}
+			}
+		}
+		return sortFinished;
 	}
-	//lista för vidarebefodrade ärenden
+	
+	//vidarebefodrade ärenden
 	public ArrayList<String> showForwarded() {
+		ArrayList<Integer> forwarded = new ArrayList<Integer>();
+		ArrayList<String> sortForwarded = new ArrayList<String>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Pågående")) {
-				forwarded.add(skada.getKey() + skada.getValue().getTitle());
+				forwarded.add(skada.getKey());
 			}
 			
 		}
-		
-		return forwarded;
+		Collections.sort(forwarded, Collections.reverseOrder());
+		for(Integer id : forwarded) {
+			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
+				if(id.equals(skada.getKey())) {
+					sortForwarded.add(skada.getKey() + " " + skada.getValue().getTitle());
+				}
+			}
+		}
+		return sortForwarded;
 	}
 }
