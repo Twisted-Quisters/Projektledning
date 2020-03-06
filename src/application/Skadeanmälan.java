@@ -81,7 +81,7 @@ public class Skadeanmälan {
  public void setComment(String newComment) {
 		comment = newComment;
  }
- 
+ //hej
 }
 
  
