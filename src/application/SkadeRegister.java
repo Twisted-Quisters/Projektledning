@@ -47,146 +47,79 @@ public class SkadeRegister {
 			}
 		}
 		ObservableList<Skadeanmälan> olIncoming = FXCollections.observableArrayList(incoming);	
+		
 		return olIncoming;
-	}
-	
-	//lista av pågående ärenden
-	public ArrayList<String> showOngoing() {
-		ArrayList<String> sortOngoing = new ArrayList<String>();
-		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-			if(skada.getValue().getStatus().equals("Pågående")) {
-				ongoing.add(skada.getKey());
-			}
-			
-		}
-		Collections.sort(ongoing);
-		for(Integer id : ongoing) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
-					sortOngoing.add(skada.getKey() + " " + skada.getValue().getTitle());
-				}
-			}
-		}
-		return sortOngoing;
+		
 	}
 	//lista av prioritet 1
-	public ArrayList<String> showPriority1() {
-		ArrayList<Integer> priority1 = new ArrayList<Integer>();
-		ArrayList<String> sortPriority1 = new ArrayList<String>();
+	public ObservableList<Skadeanmälan> showPriority1() {
+		ArrayList<Skadeanmälan> priority1 = new ArrayList<Skadeanmälan>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Pågående")) {
-				ongoing.add(skada.getKey());
-			}
-			
-		}
-		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-			for(Integer ongoing : ongoing) {
-				if(ongoing.equals(skada.getKey())) {
-					if(skada.getValue().getPriority() == 1) {
-						priority1.add(skada.getKey());
-					}	
-				}	
-			}
-		}
-		Collections.sort(priority1);
-		for(Integer id : priority1) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
-					sortPriority1.add(skada.getKey() + " " + skada.getValue().getTitle());
+				if(skada.getValue().getPriority() == 1) {
+				priority1.add(skada.getValue());
 				}
 			}
 		}
-		return sortPriority1;
+
+		ObservableList<Skadeanmälan> olPriority1 = FXCollections.observableArrayList(priority1);	
+		return olPriority1;
 	}
 	//lista av prioritet 2
-	public ArrayList<String> showPriority2() {
-		ArrayList<Integer> priority2 = new ArrayList<Integer>();
-		ArrayList<String> sortPriority2 = new ArrayList<String>();
+	public ObservableList<Skadeanmälan> showPriority2() {
+		ArrayList<Skadeanmälan> priority2 = new ArrayList<Skadeanmälan>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-			for(Integer ongoing : ongoing) {
-				if(ongoing.equals(skada.getKey())) {
-					if(skada.getValue().getPriority() == 2) {
-						priority2.add(skada.getKey());
-					}	
-				}	
-			}
-		}
-		Collections.sort(priority2);
-		for(Integer id : priority2) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
-					sortPriority2.add(skada.getKey() + " " + skada.getValue().getTitle());
+			if(skada.getValue().getStatus().equals("Pågående")) {
+				if(skada.getValue().getPriority() == 2) {
+				priority2.add(skada.getValue());
 				}
 			}
 		}
-		return sortPriority2;
+
+		ObservableList<Skadeanmälan> olPriority2 = FXCollections.observableArrayList(priority2);	
+		return olPriority2;
 	}
 	//lista av prioritet 3
-	public ArrayList<String> showPriority3() {
-		ArrayList<Integer> priority3 = new ArrayList<Integer>();
-		ArrayList<String> sortPriority3 = new ArrayList<String>();
+	public ObservableList<Skadeanmälan> showPriority3() {
+		ArrayList<Skadeanmälan> priority3 = new ArrayList<Skadeanmälan>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-			for(Integer ongoing : ongoing) {
-				if(ongoing.equals(skada.getKey())) {
-					if(skada.getValue().getPriority() == 3) {
-						priority3.add(skada.getKey());
-					}	
-				}	
-			}
-		}
-		Collections.sort(priority3);
-		for(Integer id : priority3) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
-					sortPriority3.add(skada.getKey() + " " + skada.getValue().getTitle());
+			if(skada.getValue().getStatus().equals("Pågående")) {
+				if(skada.getValue().getPriority() == 3) {
+				priority3.add(skada.getValue());
 				}
 			}
 		}
-		return sortPriority3;
+
+		ObservableList<Skadeanmälan> olPriority3 = FXCollections.observableArrayList(priority3);	
+		return olPriority3;
 	}
 	//lista av avslutade ärenden
-	public ArrayList<String> showFinished() {
-		ArrayList<Integer> finished = new ArrayList<Integer>();
-		ArrayList<String> sortFinished = new ArrayList<String>();
+	public ObservableList<Skadeanmälan> showFinished() {
+		ArrayList<Skadeanmälan> finished = new ArrayList<Skadeanmälan>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Avslutad")) {
-				finished.add(skada.getKey());
-			}
-			
-		}
-		Collections.sort(finished, Collections.reverseOrder());
-		for(Integer id : finished) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
-					sortFinished.add(skada.getKey() + " " + skada.getValue().getTitle());
-				}
+				finished.add(skada.getValue());
 			}
 		}
-		return sortFinished;
+		ObservableList<Skadeanmälan> olFinished = FXCollections.observableArrayList(finished);	
+		
+		return olFinished;
 	}
 	
 	//lista av vidarebefodrade ärenden
-	public ArrayList<String> showForwarded() {
-		ArrayList<Integer> forwarded = new ArrayList<Integer>();
-		ArrayList<String> sortForwarded = new ArrayList<String>();
+	public ObservableList<Skadeanmälan> showForwarded() {
+		ArrayList<Skadeanmälan> forwarded = new ArrayList<Skadeanmälan>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-			if(skada.getValue().getStatus().equals("Pågående")) {
-				forwarded.add(skada.getKey());
-			}
-			
-		}
-		Collections.sort(forwarded, Collections.reverseOrder());
-		for(Integer id : forwarded) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id == skada.getKey()) {
-					sortForwarded.add(skada.getKey() + " " + skada.getValue().getTitle());
-				}
+			if(skada.getValue().getStatus().equals("Vidarebefodrad")) {
+				forwarded.add(skada.getValue());
 			}
 		}
-		return sortForwarded;
+		ObservableList<Skadeanmälan> olForwarded = FXCollections.observableArrayList(forwarded);	
+		
+		return olForwarded;
 	}
 	//metod för att hitta ett ärende
-	public Skadeanmälan getSkada(String damageId) {
+	public Skadeanmälan findSkada(String damageId) {
 		int id = Integer.parseInt(damageId);
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if (id == skada.getKey()) {

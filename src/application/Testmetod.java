@@ -28,7 +28,6 @@ public class Testmetod {
 		reg.addDamage(test3);
 		reg.addDamage(test1);
 		
-		System.out.println(reg.showOngoing());
 		System.out.println(reg.showPriority3());
 	}
 }

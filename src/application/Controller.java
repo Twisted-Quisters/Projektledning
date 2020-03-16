@@ -41,16 +41,57 @@ public class Controller implements Initializable {
 	private Pane pnl_priority2;
 	@FXML 
 	private Pane pnl_priority3;
+	@FXML
+	private Pane pnl_finished;
+	@FXML 
+	private Pane pnl_forwarded;
 	
 	
 	
-	//Declaring TableView
+	//Declaring TableView incoming
 	@FXML
 	private TableView<Skadeanmälan> incomingTable;
 	@FXML
-	private TableColumn<Skadeanmälan, Integer> idColumn;
+	private TableColumn<Skadeanmälan, Integer> incomingIdColumn;
 	@FXML 
-	private TableColumn<Skadeanmälan, String> titleColumn;
+	private TableColumn<Skadeanmälan, String> incomingTitleColumn;
+	
+	//TableView priorities
+	@FXML
+	private TableView<Skadeanmälan> priority1Table;
+	@FXML
+	private TableColumn<Skadeanmälan, Integer> priority1IdColumn;
+	@FXML 
+	private TableColumn<Skadeanmälan, String> priority1TitleColumn;
+	@FXML
+	private TableView<Skadeanmälan> priority2Table;
+	@FXML
+	private TableColumn<Skadeanmälan, Integer> priority2IdColumn;
+	@FXML 
+	private TableColumn<Skadeanmälan, String> priority2TitleColumn;
+	@FXML
+	private TableView<Skadeanmälan> priority3Table;
+	@FXML
+	private TableColumn<Skadeanmälan, Integer> priority3IdColumn;
+	@FXML 
+	private TableColumn<Skadeanmälan, String> priority3TitleColumn;
+	
+	//TableView finished
+	@FXML
+	private TableView<Skadeanmälan> finishedTable;
+	@FXML
+	private TableColumn<Skadeanmälan, Integer> finishedIdColumn;
+	@FXML 
+	private TableColumn<Skadeanmälan, String> finishedTitleColumn;
+	
+	//TableView forwarded
+	@FXML
+	private TableView<Skadeanmälan> forwardedTable;
+	@FXML
+	private TableColumn<Skadeanmälan, Integer> forwardedIdColumn;
+	@FXML 
+	private TableColumn<Skadeanmälan, String> forwardedTitleColumn;
+	
 	
 	//Declaring ComboBox
 	@FXML
@@ -87,16 +128,33 @@ public class Controller implements Initializable {
 	
 	public void initialize(URL url, ResourceBundle rb) {
 		
-		idColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
-		titleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
+		//Incoming
+		incomingIdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
+		incomingTitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
 		
-		incomingTable.setItems(skadeReg.showIncoming());
+		//Priority
+		priority1IdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
+		priority1TitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
+		
+		priority2IdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
+		priority2TitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
+		
+		priority3IdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
+		priority3TitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
+		
+		//Finished
+		finishedIdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
+		finishedTitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
+		
+		//Finished
+		forwardedIdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
+		forwardedTitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
+		
 		
 		//Dummy data
 		Skadeanmälan s1 = new Skadeanmälan();
 		s1.setDamageId(2);
 		s1.setTime("12:00");
-		s1.setStatus("Inkommande");
 		s1.setTitle("tjoho");
 		s1.setPlace("EC1: 138");
 		skadeReg.addDamage(s1);
@@ -104,7 +162,6 @@ public class Controller implements Initializable {
 		Skadeanmälan s2 = new Skadeanmälan();
 		s2.setDamageId(1);
 		s2.setTime("12:00");
-		s2.setStatus("Inkommande");
 		s2.setTitle("test");
 		s2.setPlace("EC2: 069");
 		skadeReg.addDamage(s2);
@@ -112,6 +169,15 @@ public class Controller implements Initializable {
 		
 		//initializing TableView
 		incomingTable.getItems().setAll(skadeReg.showIncoming());
+		priority1Table.getItems().setAll(skadeReg.showPriority1());
+		priority2Table.getItems().setAll(skadeReg.showPriority2());
+		priority3Table.getItems().setAll(skadeReg.showPriority3());
+		finishedTable.getItems().setAll(skadeReg.showFinished());
+		forwardedTable.getItems().setAll(skadeReg.showForwarded());
+		
+		//initializing ComboBox
+		comboBoxPriorityList();
+		comboBoxStatusList();
 	}
 			
 	//Buttons to change views
@@ -120,6 +186,9 @@ public class Controller implements Initializable {
 		}
 		public void buttonIncoming(ActionEvent incomingScreen) {
 			pnl_incoming.toFront();
+		}
+		public void buttonOngoing(ActionEvent ongoingScreen) {
+			pnl_ongoing.toFront();
 		}
 		public void buttonIncomingDamageInfo(ActionEvent incomingDamageInfoScreen) {
 			pnl_damageInfo.toFront();
@@ -131,15 +200,91 @@ public class Controller implements Initializable {
 			status.setText(skada.getStatus());
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
-			
+			priority.setText("Ingen prioritet ifylld");
 			
 		}
-		public void buttonOngoing(ActionEvent ongoingScreen) {
-			pnl_ongoing.toFront();
-		}
+		
 		public void buttonPriority1(ActionEvent priority1Screen) {
 			pnl_priority1.toFront();
 		}
+		public void buttonPriority1DamageInfo(ActionEvent priority1DamageInfoScreen) {
+			pnl_damageInfo.toFront();
+			Skadeanmälan skada = priority1Table.getSelectionModel().getSelectedItem();
+			skadeReg.setDamageInfo(skada);
+			
+			damageId.setText(Integer.toString(skada.getDamageId()));
+			title.setText(skada.getTitle());
+			status.setText(skada.getStatus());
+			time.setText(skada.getTime());
+			place.setText(skada.getPlace());
+			
+		}
+		public void buttonPriority2(ActionEvent priority2Screen) {
+			pnl_priority2.toFront();
+		}
+		
+		public void buttonPriority2DamageInfo(ActionEvent priority2DamageInfoScreen) {
+			pnl_damageInfo.toFront();
+			Skadeanmälan skada = priority2Table.getSelectionModel().getSelectedItem();
+			skadeReg.setDamageInfo(skada);
+			
+			damageId.setText(Integer.toString(skada.getDamageId()));
+			title.setText(skada.getTitle());
+			status.setText(skada.getStatus());
+			time.setText(skada.getTime());
+			place.setText(skada.getPlace());
+			
+		}
+		public void buttonPriority3(ActionEvent priority3Screen) {
+			pnl_priority3.toFront();
+		}
+		
+		public void buttonPriority3DamageInfo(ActionEvent priority3DamageInfoScreen) {
+			pnl_damageInfo.toFront();
+			Skadeanmälan skada = priority3Table.getSelectionModel().getSelectedItem();
+			skadeReg.setDamageInfo(skada);
+			
+			damageId.setText(Integer.toString(skada.getDamageId()));
+			title.setText(skada.getTitle());
+			status.setText(skada.getStatus());
+			time.setText(skada.getTime());
+			place.setText(skada.getPlace());
+			
+		}
+		public void buttonFinished(ActionEvent finishedScreen) {
+			pnl_finished.toFront();
+		}
+		
+		public void buttonFinishedDamageInfo(ActionEvent incomingFinishedInfoScreen) {
+			pnl_damageInfo.toFront();
+			Skadeanmälan skada = finishedTable.getSelectionModel().getSelectedItem();
+			skadeReg.setDamageInfo(skada);
+			
+			damageId.setText(Integer.toString(skada.getDamageId()));
+			title.setText(skada.getTitle());
+			status.setText(skada.getStatus());
+			time.setText(skada.getTime());
+			place.setText(skada.getPlace());
+			
+		}
+		public void buttonForwarded(ActionEvent forwardedScreen) {
+			pnl_forwarded.toFront();
+		}
+		
+		public void buttonForwardedDamageInfo(ActionEvent incomingForwardedInfoScreen) {
+			
+			pnl_damageInfo.toFront();
+			Skadeanmälan skada = forwardedTable.getSelectionModel().getSelectedItem();
+			skadeReg.setDamageInfo(skada);
+			
+			damageId.setText(Integer.toString(skada.getDamageId()));
+			title.setText(skada.getTitle());
+			status.setText(skada.getStatus());
+			time.setText(skada.getTime());
+			place.setText(skada.getPlace());
+			
+		}
+		
 		//Adds priority to comboBox
 		public void comboBoxPriorityList() {
 			ArrayList<String> priorityList = new ArrayList<String>();
@@ -156,7 +301,32 @@ public class Controller implements Initializable {
 			statusList.add("Avslutad");				
 			statusList.add("Vidarebefodrad");
 			ObservableList<String> olStatusList = FXCollections.observableArrayList(statusList);
-			cbPriorityList.setItems(olStatusList);
-				}
+			cbStatusList.setItems(olStatusList);
+		}
+		public void buttonUpdateDamage(ActionEvent update) {
+			
+			String currentDamageId = damageId.getText();
+			Skadeanmälan skada = skadeReg.findSkada(currentDamageId);
+			
+			String statusUpdate = cbStatusList.getSelectionModel().getSelectedItem();
+			skada.setStatus(statusUpdate);
+			
+			String priority = cbPriorityList.getSelectionModel().getSelectedItem();
+			skada.setPriority(Integer.parseInt(priority));
+			
+			status.setText(skada.getStatus());
+			
+			cbPriorityList.getSelectionModel().select(null);
+			cbStatusList.getSelectionModel().select(null);
+			
+			//uppdaterar tabellerna
+			incomingTable.getItems().setAll(skadeReg.showIncoming());
+			priority1Table.getItems().setAll(skadeReg.showPriority1());
+			priority2Table.getItems().setAll(skadeReg.showPriority2());
+			priority3Table.getItems().setAll(skadeReg.showPriority3());
+			forwardedTable.getItems().setAll(skadeReg.showForwarded());
+			finishedTable.getItems().setAll(skadeReg.showFinished());
+			
+		}
 	
 }

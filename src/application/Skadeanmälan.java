@@ -1,7 +1,5 @@
 package application;
 
-import javafx.beans.property.SimpleStringProperty;
-
 public class Skadeanmälan {
  private int damageId;
  private String damageType;
