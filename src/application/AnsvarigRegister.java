@@ -22,10 +22,18 @@ public class AnsvarigRegister {
 	}
 	public ObservableList<String> showAnsvarig() {
 		ArrayList<String> stringAnsvarigLista = new ArrayList<String>();
-		for(Map.Entry<Integer, Ansvarig> anställd : ansvarigLista.entrySet()) {
-			stringAnsvarigLista.add(anställd.getValue().getNamn());
+		for(Map.Entry<Integer, Ansvarig> ansvarig : ansvarigLista.entrySet()) {
+			stringAnsvarigLista.add(ansvarig.getValue().getNamn());
 			}
 		ObservableList<String> olAnsvarigLista = FXCollections.observableArrayList(stringAnsvarigLista);	
 		return olAnsvarigLista;
+	}
+	public Ansvarig findAnsvarig(String name) {
+		for(Map.Entry<Integer, Ansvarig> ansvarig : ansvarigLista.entrySet()) {
+			if(name.equals(ansvarig.getValue().getNamn())) {
+				return ansvarig.getValue();
+			}
+		}
+		return null;
 	}
 }

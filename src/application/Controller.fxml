@@ -142,7 +142,7 @@
                         <Label layoutX="7.0" layoutY="151.0" prefHeight="17.0" prefWidth="39.0" text="Type:" />
                         <Label fx:id="damageType" layoutX="48.0" layoutY="151.0" prefHeight="17.0" prefWidth="160.0" />
                         <ComboBox fx:id="cbTypeList" layoutX="224.0" layoutY="147.0" prefHeight="25.0" prefWidth="113.0" />
-                        <ComboBox layoutX="224.0" layoutY="209.0" prefHeight="25.0" prefWidth="113.0" />
+                        <ComboBox fx:id="cbAnsvarigList" layoutX="224.0" layoutY="209.0" prefHeight="25.0" prefWidth="113.0" />
                         <Label layoutX="7.0" layoutY="213.0" prefHeight="17.0" prefWidth="58.0" text="Ansvarig:" />
                         <Label fx:id="ansvarig" layoutX="66.0" layoutY="213.0" prefHeight="17.0" prefWidth="128.0" />
                         <TextArea fx:id="comment" layoutX="103.0" layoutY="261.0" prefHeight="58.0" prefWidth="228.0" />

@@ -127,11 +127,10 @@ public class Controller implements Initializable {
 	@FXML  
 	private TextArea action;
 	@FXML  
-	private TextArea comment;
-	
+	private TextArea comment;	
 	
 	public void initialize(URL url, ResourceBundle rb) {
-		
+				
 		//Incoming
 		incomingIdColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, Integer>("damageId"));
 		incomingTitleColumn.setCellValueFactory(new PropertyValueFactory<Skadeanmälan, String>("title"));
@@ -195,8 +194,7 @@ public class Controller implements Initializable {
 		comboBoxStatusList();
 		comboBoxTypeList();
 		System.out.println(ansvarReg.showAnsvarig());
-		ObservableList<String> test = ansvarReg.showAnsvarig();
-		//cbAnsvarigList.setItems(ansvarReg.showAnsvarig());
+		cbAnsvarigList.setItems(ansvarReg.showAnsvarig());
 	}
 			
 	//Buttons to change views
@@ -357,26 +355,39 @@ public class Controller implements Initializable {
 		public void buttonUpdateDamage(ActionEvent update) {
 			
 			String currentDamageId = damageId.getText();
-			Skadeanmälan skada = skadeReg.findSkada(currentDamageId);
+			Skadeanmälan skada = skadeReg.findSkada(currentDamageId);	
 			
-			String statusUpdate = cbStatusList.getSelectionModel().getSelectedItem();
-			skada.setStatus(statusUpdate);
+			if(cbStatusList.getSelectionModel().getSelectedItem() != null) {
+				String statusUpdate = cbStatusList.getSelectionModel().getSelectedItem();
+				skada.setStatus(statusUpdate);
+			}	
 			
-			String priorityUpdate = cbPriorityList.getSelectionModel().getSelectedItem();
-			skada.setPriority(Integer.parseInt(priorityUpdate));
+			if(cbPriorityList.getSelectionModel().getSelectedItem() != null) {
+				String priorityUpdate = cbPriorityList.getSelectionModel().getSelectedItem();
+				skada.setPriority(Integer.parseInt(priorityUpdate));
+			}	
 			
-			String typeUpdate = cbTypeList.getSelectionModel().getSelectedItem();
-			skada.setDamageType(typeUpdate);
+			if(cbTypeList.getSelectionModel().getSelectedItem() != null) {
+				String typeUpdate = cbTypeList.getSelectionModel().getSelectedItem();
+				skada.setDamageType(typeUpdate);
+			}	
 			
+			if(cbTypeList.getSelectionModel().getSelectedItem() != null) {
+				String ansvarigName = cbAnsvarigList.getSelectionModel().getSelectedItem();
+				Ansvarig ansvarigUpdate = ansvarReg.findAnsvarig(ansvarigName);
+				skada.setAnsvarig(ansvarigUpdate);
+			}	
 
 			status.setText(skada.getStatus());
 			priority.setText(Integer.toString(skada.getPriority()));
 			damageType.setText(skada.getDamageType());
+			ansvarig.setText(skada.getAnsvarig().getNamn());
 			
 			
 			cbPriorityList.getSelectionModel().select(null);
 			cbStatusList.getSelectionModel().select(null);
 			cbTypeList.getSelectionModel().select(null);
+			cbAnsvarigList.getSelectionModel().select(null);
 			
 			//uppdaterar tabellerna
 			incomingTable.getItems().setAll(skadeReg.showIncoming());
