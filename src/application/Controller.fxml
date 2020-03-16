@@ -1,22 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="285.0">
+      <AnchorPane prefHeight="50.0" prefWidth="285.0" style="-fx-background-color: #ffffff;">
+    	  <children>
+            <Button layoutX="2.0" layoutY="358.0" mnemonicParsing="false" onAction="#buttonIncoming" prefHeight="23.0" prefWidth="79.0" text="Inkommande">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Button layoutX="81.0" layoutY="358.0" mnemonicParsing="false" onAction="#buttonOngoing" text="Pågående">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Button layoutX="139.0" layoutY="358.0" mnemonicParsing="false" text="Avslutade">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Button layoutX="197.0" layoutY="358.0" mnemonicParsing="false" text="Vidarebefodrade">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+     	 </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="350.0" prefWidth="285.0">
          <children>
-            <Pane layoutX="-2.0" layoutY="-9.0" prefHeight="409.0" prefWidth="285.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutX="8.0" layoutY="1.0" prefHeight="400.0" prefWidth="277.0" />
-            <Pane layoutY="1.0" prefHeight="400.0" prefWidth="285.0" />
+            <Pane fx:id="pnl_home" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" />
+            <Pane fx:id="pnl_priority2" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" />
+            <Pane fx:id="pnl_priority3" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" />
+            <Pane layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" />
+            <Pane layoutY="0.0" prefHeight="350.0" prefWidth="285.0" />
+            <Pane fx:id="pnl_ongoing" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <AnchorPane prefHeight="344.0" prefWidth="285.0">
+                     <children>
+                        <Button layoutX="41.0" layoutY="108.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="72.0" text="Prioritet 3" />
+                        <Button layoutX="41.0" layoutY="43.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="72.0" text="Prioritet 2" />
+                        <Button mnemonicParsing="false" onAction="#buttonPriority1" text="Prioritet 1" />
+                     </children>
+                  </AnchorPane>
+               </children></Pane>
+            <Pane fx:id="pnl_priority1" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <AnchorPane prefHeight="356.0" prefWidth="277.0">
+                     <children>
+                        <Label layoutX="110.0" layoutY="37.0" prefHeight="34.0" prefWidth="58.0" text="Prioritet 1" />
+                        <Button layoutX="75.0" layoutY="295.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="128.0" text="Visa information" />
+                        <TableView layoutX="16.0" layoutY="81.0" prefHeight="160.0" prefWidth="245.0">
+                          <columns>
+                            <TableColumn prefWidth="244.0" text="C1" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </children></Pane>
+            <Pane fx:id="pnl_incoming" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="65.0" layoutY="22.0" prefHeight="25.0" prefWidth="160.0" text="Inkommande">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="incomingTable" layoutX="31.0" layoutY="75.0" prefHeight="202.0" prefWidth="228.0">
+                          <columns>
+                            <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="titleColumn" prefWidth="150.0" text="Beskrivning" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                  <Button layoutX="82.0" layoutY="287.0" mnemonicParsing="false" onAction="#buttonIncomingDamageInfo" prefHeight="34.0" prefWidth="113.0" text="Visa information" />
+               </children></Pane>
+            <Pane fx:id="pnl_damageInfo" layoutX="0.0" layoutY="0.0" prefHeight="350.0" prefWidth="277.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <AnchorPane prefHeight="356.0" prefWidth="285.0">
+                     <children>
+                     <Label layoutX="7.0" layoutY="32.0" prefHeight="17.0" prefWidth="39.0" text="ID:" />
+	                  <Label fx:id="damageId" layoutX="66.0" layoutY="32.0" prefHeight="17.0" prefWidth="113.0" />
+	                  <Label layoutX="7.0" layoutY="56.0" prefHeight="17.0" prefWidth="39.0" text="Titel:" />
+	                  <Label fx:id="title" layoutX="66.0" layoutY="56.0" prefHeight="17.0" prefWidth="148.0" />
+	                  <Label layoutX="7.0" layoutY="83.0" prefHeight="25.0" prefWidth="39.0" text="Status:" />
+	                  <Label fx:id="status" layoutX="66.0" layoutY="87.0" prefHeight="17.0" prefWidth="160.0" />
+	                  <Label layoutX="7.0" layoutY="121.0" prefHeight="17.0" prefWidth="39.0" text="Plats:" />
+	                  <Label fx:id="place" layoutX="66.0" layoutY="121.0" prefHeight="17.0" prefWidth="209.0" />
+	                  <Label layoutX="7.0" layoutY="153.0" prefHeight="17.0" prefWidth="39.0" text="Tid:" />
+	                  <Label fx:id="time" layoutX="66.0" layoutY="153.0" prefHeight="17.0" prefWidth="160.0" />
+                        <Button layoutX="207.0" layoutY="298.0" mnemonicParsing="false" text="Uppdatera" />
+                        <ComboBox layoutX="166.0" layoutY="83.0" prefHeight="25.0" prefWidth="97.0" />
+                        <ComboBox layoutX="74.0" layoutY="178.0" prefHeight="25.0" prefWidth="97.0" />
+                        <Label layoutX="14.0" layoutY="182.0" text="Prioritet:" />
+                     </children>
+                  </AnchorPane>
+               </children></Pane>
          </children>
       </AnchorPane>
    </children>

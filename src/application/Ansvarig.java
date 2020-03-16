@@ -2,7 +2,7 @@ package application;
 
 public class Ansvarig {
 	private int personalId;
-	private String namn;
+	private String name;
 	public int getPersonalId() {
 		return personalId;
 	}
@@ -10,9 +10,9 @@ public class Ansvarig {
 		this.personalId = personalId;
 	}
 	public String getNamn() {
-		return namn;
+		return name;
 	}
 	public void setNamn(String namn) {
-		this.namn = namn;
+		this.name = namn;
 	}
 }

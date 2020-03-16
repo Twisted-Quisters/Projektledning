@@ -12,10 +12,10 @@ public class Testmetod {
 		test1.setDamageId(41);
 		test2.setDamageId(8);
 		test3.setDamageId(20);
-		test.setTitle("Skada på fönster");
-		test1.setTitle("Skada på stol");
-		test2.setTitle("krossat fönster");
-		test3.setTitle("jag vet inte!!");
+		//test.setTitle("Skada på fönster");
+		//test1.setTitle("Skada på stol");
+		//test2.setTitle("krossat fönster");
+		//test3.setTitle("jag vet inte!!");
 		test.setPriority(1);
 		test1.setPriority(3);
 		test2.setPriority(1);

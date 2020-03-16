@@ -5,9 +5,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class SkadeRegister {
 	private HashMap <Integer, Skadeanmälan> damageList = new HashMap <Integer, Skadeanmälan>();
 	private ArrayList<Integer> ongoing = new ArrayList<Integer>();
+	private Skadeanmälan damageInfo = null;
 
 
 	public HashMap <Integer, Skadeanmälan> getSkadeLista() {
@@ -23,33 +27,30 @@ public class SkadeRegister {
 	public void setFinished(ArrayList<Integer> ongoing) {
 		this.ongoing = ongoing;
 	}
+	public Skadeanmälan getDamageInfo() {
+		return damageInfo;
+	}
+	public void setDamageInfo(Skadeanmälan damageInfo) {
+		this.damageInfo = damageInfo;
+	}
 	
 	public void addDamage(Skadeanmälan skada) {
 		damageList.put(skada.getDamageId(), skada);
 	}
 	
-	// inkommande ärenden
-	public ArrayList<String> showIncoming() {
-		ArrayList<Integer> incoming = new ArrayList<Integer>();
-		ArrayList<String> sortIncoming = new ArrayList<String>();
+	// lista av inkommande ärenden
+	public ObservableList<Skadeanmälan> showIncoming() {
+		ArrayList<Skadeanmälan> incoming = new ArrayList<Skadeanmälan>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
 			if(skada.getValue().getStatus().equals("Inkommande")) {
-				incoming.add(skada.getKey());
-			}
-			
-		}
-		Collections.sort(incoming);
-		for(Integer id : incoming) {
-			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
-					sortIncoming.add(skada.getKey() + " " + skada.getValue().getTitle());
-				}
+				incoming.add(skada.getValue());
 			}
 		}
-		return sortIncoming;
+		ObservableList<Skadeanmälan> olIncoming = FXCollections.observableArrayList(incoming);	
+		return olIncoming;
 	}
 	
-	//pågående ärenden
+	//lista av pågående ärenden
 	public ArrayList<String> showOngoing() {
 		ArrayList<String> sortOngoing = new ArrayList<String>();
 		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
@@ -68,7 +69,7 @@ public class SkadeRegister {
 		}
 		return sortOngoing;
 	}
-	//prioritet 1
+	//lista av prioritet 1
 	public ArrayList<String> showPriority1() {
 		ArrayList<Integer> priority1 = new ArrayList<Integer>();
 		ArrayList<String> sortPriority1 = new ArrayList<String>();
@@ -97,7 +98,7 @@ public class SkadeRegister {
 		}
 		return sortPriority1;
 	}
-	//prioritet 2
+	//lista av prioritet 2
 	public ArrayList<String> showPriority2() {
 		ArrayList<Integer> priority2 = new ArrayList<Integer>();
 		ArrayList<String> sortPriority2 = new ArrayList<String>();
@@ -120,7 +121,7 @@ public class SkadeRegister {
 		}
 		return sortPriority2;
 	}
-	//prioritet 3
+	//lista av prioritet 3
 	public ArrayList<String> showPriority3() {
 		ArrayList<Integer> priority3 = new ArrayList<Integer>();
 		ArrayList<String> sortPriority3 = new ArrayList<String>();
@@ -143,7 +144,7 @@ public class SkadeRegister {
 		}
 		return sortPriority3;
 	}
-	//avslutade ärenden
+	//lista av avslutade ärenden
 	public ArrayList<String> showFinished() {
 		ArrayList<Integer> finished = new ArrayList<Integer>();
 		ArrayList<String> sortFinished = new ArrayList<String>();
@@ -164,7 +165,7 @@ public class SkadeRegister {
 		return sortFinished;
 	}
 	
-	//vidarebefodrade ärenden
+	//lista av vidarebefodrade ärenden
 	public ArrayList<String> showForwarded() {
 		ArrayList<Integer> forwarded = new ArrayList<Integer>();
 		ArrayList<String> sortForwarded = new ArrayList<String>();
@@ -177,11 +178,21 @@ public class SkadeRegister {
 		Collections.sort(forwarded, Collections.reverseOrder());
 		for(Integer id : forwarded) {
 			for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
-				if(id.equals(skada.getKey())) {
+				if(id == skada.getKey()) {
 					sortForwarded.add(skada.getKey() + " " + skada.getValue().getTitle());
 				}
 			}
 		}
 		return sortForwarded;
+	}
+	//metod för att hitta ett ärende
+	public Skadeanmälan getSkada(String damageId) {
+		int id = Integer.parseInt(damageId);
+		for(Map.Entry<Integer, Skadeanmälan> skada : damageList.entrySet()) {
+			if (id == skada.getKey()) {
+				return skada.getValue();
+			}
+		}
+		return null;
 	}
 }
