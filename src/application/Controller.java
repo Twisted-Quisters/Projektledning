@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
@@ -25,6 +24,7 @@ public class Controller implements Initializable {
 	
 	//Registers
 	SkadeRegister skadeReg = new SkadeRegister();
+	AnsvarigRegister ansvarReg = new AnsvarigRegister();
 	
 	//Declaring panes to fix layout
 	@FXML
@@ -98,6 +98,10 @@ public class Controller implements Initializable {
 	private ComboBox<String> cbPriorityList;
 	@FXML
 	private ComboBox<String> cbStatusList;
+	@FXML
+	private ComboBox<String> cbTypeList;
+	@FXML
+	private ComboBox<String> cbAnsvarigList;
 	
 	
 	
@@ -166,6 +170,17 @@ public class Controller implements Initializable {
 		s2.setPlace("EC2: 069");
 		skadeReg.addDamage(s2);
 		
+		Ansvarig a1 = new Ansvarig();
+		a1.setNamn("Magnus");
+		a1.setPersonalId(12345);
+		ansvarReg.addAnsvarig(a1);
+		
+		Ansvarig a2 = new Ansvarig();
+		a2.setNamn("Markus");
+		a2.setPersonalId(5678);
+		ansvarReg.addAnsvarig(a2);
+		
+		
 		
 		//initializing TableView
 		incomingTable.getItems().setAll(skadeReg.showIncoming());
@@ -178,6 +193,10 @@ public class Controller implements Initializable {
 		//initializing ComboBox
 		comboBoxPriorityList();
 		comboBoxStatusList();
+		comboBoxTypeList();
+		System.out.println(ansvarReg.showAnsvarig());
+		ObservableList<String> test = ansvarReg.showAnsvarig();
+		//cbAnsvarigList.setItems(ansvarReg.showAnsvarig());
 	}
 			
 	//Buttons to change views
@@ -201,7 +220,8 @@ public class Controller implements Initializable {
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
 			priority.setText("Ingen prioritet ifylld");
-			
+			damageType.setText("Ingen typ ifylld");
+			ansvarig.setText("Ingen ansvarig ifylld");
 		}
 		
 		public void buttonPriority1(ActionEvent priority1Screen) {
@@ -217,10 +237,13 @@ public class Controller implements Initializable {
 			status.setText(skada.getStatus());
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
-			
+			priority.setText(Integer.toString(skada.getPriority()));
+			damageType.setText(skada.getDamageType());
+			ansvarig.setText(skada.getAnsvarig().getNamn());
 		}
 		public void buttonPriority2(ActionEvent priority2Screen) {
 			pnl_priority2.toFront();
+			
 		}
 		
 		public void buttonPriority2DamageInfo(ActionEvent priority2DamageInfoScreen) {
@@ -233,6 +256,9 @@ public class Controller implements Initializable {
 			status.setText(skada.getStatus());
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
+			priority.setText(Integer.toString(skada.getPriority()));
+			damageType.setText(skada.getDamageType());
+			ansvarig.setText(skada.getAnsvarig().getNamn());
 			
 		}
 		public void buttonPriority3(ActionEvent priority3Screen) {
@@ -249,6 +275,9 @@ public class Controller implements Initializable {
 			status.setText(skada.getStatus());
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
+			priority.setText(Integer.toString(skada.getPriority()));
+			damageType.setText(skada.getDamageType());
+			ansvarig.setText(skada.getAnsvarig().getNamn());
 			
 		}
 		public void buttonFinished(ActionEvent finishedScreen) {
@@ -265,6 +294,9 @@ public class Controller implements Initializable {
 			status.setText(skada.getStatus());
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
+			priority.setText(Integer.toString(skada.getPriority()));
+			damageType.setText(skada.getDamageType());
+			ansvarig.setText(skada.getAnsvarig().getNamn());
 			
 		}
 		public void buttonForwarded(ActionEvent forwardedScreen) {
@@ -282,7 +314,9 @@ public class Controller implements Initializable {
 			status.setText(skada.getStatus());
 			time.setText(skada.getTime());
 			place.setText(skada.getPlace());
-			
+			priority.setText(Integer.toString(skada.getPriority()));
+			damageType.setText(skada.getDamageType());
+			ansvarig.setText(skada.getAnsvarig().getNamn());
 		}
 		
 		//Adds priority to comboBox
@@ -303,6 +337,23 @@ public class Controller implements Initializable {
 			ObservableList<String> olStatusList = FXCollections.observableArrayList(statusList);
 			cbStatusList.setItems(olStatusList);
 		}
+		//Adds priority to comboBox
+		public void comboBoxTypeList() {
+			ArrayList<String> typeList = new ArrayList<String>();
+			typeList.add("Möbel");
+			typeList.add("Fönster");				
+			typeList.add("Elektronik");
+			typeList.add("Belysning");
+			typeList.add("Rör/ledning");
+			typeList.add("Ventilation");
+			typeList.add("Golv");
+			typeList.add("Vägg");
+			typeList.add("Dörr");
+			typeList.add("Utrymningssystem");
+			ObservableList<String> olTypeList = FXCollections.observableArrayList(typeList);
+			cbTypeList.setItems(olTypeList);
+		}
+				
 		public void buttonUpdateDamage(ActionEvent update) {
 			
 			String currentDamageId = damageId.getText();
@@ -311,13 +362,21 @@ public class Controller implements Initializable {
 			String statusUpdate = cbStatusList.getSelectionModel().getSelectedItem();
 			skada.setStatus(statusUpdate);
 			
-			String priority = cbPriorityList.getSelectionModel().getSelectedItem();
-			skada.setPriority(Integer.parseInt(priority));
+			String priorityUpdate = cbPriorityList.getSelectionModel().getSelectedItem();
+			skada.setPriority(Integer.parseInt(priorityUpdate));
 			
+			String typeUpdate = cbTypeList.getSelectionModel().getSelectedItem();
+			skada.setDamageType(typeUpdate);
+			
+
 			status.setText(skada.getStatus());
+			priority.setText(Integer.toString(skada.getPriority()));
+			damageType.setText(skada.getDamageType());
+			
 			
 			cbPriorityList.getSelectionModel().select(null);
 			cbStatusList.getSelectionModel().select(null);
+			cbTypeList.getSelectionModel().select(null);
 			
 			//uppdaterar tabellerna
 			incomingTable.getItems().setAll(skadeReg.showIncoming());
